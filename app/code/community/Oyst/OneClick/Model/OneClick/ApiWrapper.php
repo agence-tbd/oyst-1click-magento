@@ -139,8 +139,8 @@ class Oyst_OneClick_Model_OneClick_ApiWrapper extends Oyst_OneClick_Model_Api
             $context['user_id'] = (string)Mage::getSingleton('customer/session')->getCustomer()->getId();
         }
 
-        if (!(null === ($userId = Mage::getSingleton('customer/session')->getCustomerId()))) {
-            $context['user_id'] = $userId;
+        if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $context['user_id'] = Mage::getSingleton('customer/session')->getCustomerId();
         }
 
         try {
