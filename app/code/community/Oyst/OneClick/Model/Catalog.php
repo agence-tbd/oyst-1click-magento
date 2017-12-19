@@ -9,6 +9,7 @@
  * @copyright Copyright (c) 2017 Oyst (http://www.oyst.com)
  */
 
+use Oyst\Classes\OneClickItem;
 use Oyst\Classes\OneClickShipmentCalculation;
 use Oyst\Classes\OneClickShipmentCatalogLess;
 use Oyst\Classes\OneClickStock;
@@ -178,8 +179,8 @@ class Oyst_OneClick_Model_Catalog extends Mage_Core_Model_Abstract
 
         // Do action for each event type
         switch ($event) {
-            case 'order.shipments.get':
-                $response = $this->retrieveShippingMethods($apiData);
+            case 'order.cart.estimate':
+                $response = $this->cartEstimate($apiData);
                 break;
 
             // Reduce qty in order or cancel booking
@@ -798,22 +799,16 @@ class Oyst_OneClick_Model_Catalog extends Mage_Core_Model_Abstract
     }
 
     /**
-     * Get the shipping methods
+     * Get the shipping methods and apply cart rule
      *
      * @param $data
      *
      * @return string
      */
-    public function retrieveShippingMethods($apiData)
+    public function cartEstimate($apiData)
     {
-        // @TODO EndpointShipment: remove these bad hack for currency
-        $apiData['order_amount']['currency'] = 'EUR';
-        $apiData['created_at'] = Mage::getModel('core/date')->gmtDate();
-        $apiData['created_at'] = Mage::getModel('core/date')->gmtDate();
-        $apiData['id'] = null;
-
         /** @var Mage_Core_Model_Store $store */
-        $store = Mage::getModel('core/store')->load($apiData['context']['store_id']);
+        $store = Mage::getModel('core/store')->load($apiData['order']['context']['store_id']);
 
         /** @var Oyst_OneClick_Model_Magento_Quote $magentoQuoteBuilder */
         $magentoQuoteBuilder = Mage::getModel('oyst_oneclick/magento_quote', $apiData);
@@ -874,6 +869,11 @@ class Oyst_OneClick_Model_Catalog extends Mage_Core_Model_Abstract
                 Mage::logException($e);
                 continue;
             }
+
+// DEV
+            $item = new OneClickItem("551", 1, null, new OystPrice(100, 'EUR'), new OystPrice(132, 'EUR'));
+
+            $oneClickShipmentCalculation->addItem($item);
         }
 
         if (!$isPrimarySet) {
@@ -883,6 +883,11 @@ class Oyst_OneClick_Model_Catalog extends Mage_Core_Model_Abstract
         $magentoQuoteBuilder->getQuote()->setIsActive(false)->save();
 
         return $oneClickShipmentCalculation->toJson();
+
+        $a = $oneClickShipmentCalculation->toArray();
+        $response = Zend_Json::encode($a);
+
+        return $response;
     }
 
     /**

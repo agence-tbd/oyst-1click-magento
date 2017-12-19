@@ -54,7 +54,7 @@ class Oyst_OneClick_NotificationsController extends Mage_Core_Controller_Front_A
                 $modelName = 'oyst_oneclick/order';
                 break;
             // OneClick
-            case 'order.shipments.get':
+            case 'order.cart.estimate':
             case 'order.stock.book':
             case 'order.stock.released':
                 $modelName = 'oyst_oneclick/catalog';

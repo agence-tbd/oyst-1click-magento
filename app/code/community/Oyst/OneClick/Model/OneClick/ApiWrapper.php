@@ -117,6 +117,10 @@ class Oyst_OneClick_Model_OneClick_ApiWrapper extends Oyst_OneClick_Model_Api
         $notifications->setShouldAskStock($this->_getConfig('should_ask_stock'));
         $notifications->setUrl($this->_getConfig('notification_url'));
 
+        if ($notifications->isShouldAskShipments()) {
+            $notifications->addEvent('order.cart.estimate');
+        }
+
         // Book initial quantity
         if (!$dataFormated['preload'] && $this->_getConfig('should_ask_stock')) {
             $realPid = $product->isConfigurable() ? $dataFormated['configurableProductChildId'] : $product->getId();
@@ -139,6 +143,7 @@ class Oyst_OneClick_Model_OneClick_ApiWrapper extends Oyst_OneClick_Model_Api
             $context['user_id'] = (string)Mage::getSingleton('customer/session')->getCustomer()->getId();
         }
 
+        $context['user_id'] = 137;
         if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             $context['user_id'] = Mage::getSingleton('customer/session')->getCustomerId();
         }
