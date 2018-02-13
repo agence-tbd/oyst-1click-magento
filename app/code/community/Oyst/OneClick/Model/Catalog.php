@@ -32,7 +32,7 @@ class Oyst_OneClick_Model_Catalog extends Mage_Core_Model_Abstract
         Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE,
         Mage_Catalog_Model_Product_Type::TYPE_GROUPED,
         //Mage_Catalog_Model_Product_Type::TYPE_BUNDLE,
-        //Mage_Catalog_Model_Product_Type::TYPE_VIRTUAL,
+        Mage_Catalog_Model_Product_Type::TYPE_VIRTUAL,
         //Mage_Downloadable_Model_Product_Type::TYPE_DOWNLOADABLE,
     );
 

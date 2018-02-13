@@ -35,6 +35,7 @@ function oystOneClick(productTypeId, oneClickUrl, isProductAddtocartFormValidate
             var productId, quantity, configurableProductChildId, superGroupEl, productsEl;
             switch (productTypeId) {
                 case "simple":
+                case "virtual":
                     // [Hook] Custom function allow anyone to use custom function to retrieve product id
                     productId = "function" === typeof customGetProductId ?
                         customGetProductId() :
