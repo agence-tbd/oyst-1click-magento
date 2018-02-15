@@ -151,3 +151,9 @@
 
 "Unable to refund Oyst order %s (%s - %s).","Unable to refund Oyst order %s (%s - %s)."
 "There is already one credit memo in the queue.","There is already one credit memo in the queue."
+
+"Top","Top"
+"Bottom","Bottom"
+"Disabled","Disabled"
+"Position of button from checkout cart","Position of button from checkout cart"
+"Select position of button","Select position of button"

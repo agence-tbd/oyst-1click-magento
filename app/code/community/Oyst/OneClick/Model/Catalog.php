@@ -243,8 +243,13 @@ class Oyst_OneClick_Model_Catalog extends Mage_Core_Model_Abstract
         $checkQuoteItemQty = '';
         $productsFormated = array();
         foreach ($products as $product) {
-            // @codingStandardsIgnoreLine
-            $currentProduct = Mage::getModel('catalog/product')->load($product['productId']);
+
+            if (is_numeric($product['productId'])) {
+                // @codingStandardsIgnoreLine
+                $currentProduct = Mage::getModel('catalog/product')->load($product['productId']);
+            } else {
+                $currentProduct = Mage::getModel('catalog/product')->loadByAttribute('sku', $product['productId']);
+            }
 
             if ($isPreload) {
                 $product['quantity'] = 1;
@@ -297,7 +302,7 @@ class Oyst_OneClick_Model_Catalog extends Mage_Core_Model_Abstract
                 if (array_key_exists('configurableProductChildId', $product)) {
                     $realPid = $this->configurableProductChildId;
                 } else {
-                    $realPid = $product['productId'];
+                    $realPid = $currentProduct->getId();
                 }
 
                 $this->stockItemToBook($realPid, $product['quantity']);
@@ -338,7 +343,7 @@ class Oyst_OneClick_Model_Catalog extends Mage_Core_Model_Abstract
 
             // Add others attributes
             // Don't get price from child product
-            if (in_array($product->getId(), $this->productsIds)) {
+            if (in_array($product->getId(), $this->productsIds) || in_array($product->getSku(), $this->productsIds)) {
                 $this->addAmount($product, $oystProduct);
             }
 

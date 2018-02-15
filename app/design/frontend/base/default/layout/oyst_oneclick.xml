@@ -41,4 +41,34 @@
         </reference>
     </catalog_product_view>
 
+    <checkout_cart_index>
+        <block type="oyst_oneclick/oneClick" name="oyst.oneclick.cart.checkout" template="oyst/oneclick/cart/oneclick.phtml" />
+
+        <reference name="head">
+            <block type="core/text" name="cdnjs.oyst-oneclick">
+                <action method="setText" ifconfig="oyst/oneclick/enable">
+                    <text helper="oyst_oneclick/getOneClickJs"/>
+                </action>
+            </block>
+            <action method="addCss" ifconfig="oyst/oneclick/enable"><stylesheet>css/oyst/oneclick.css</stylesheet></action>
+            <action method="addItem"><type>skin_js</type><name>js/oyst/cart/oneclick.js</name></action>
+        </reference>
+    </checkout_cart_index>
+
+    <oneclick_cart_top>
+        <reference name="checkout.cart.top_methods">
+            <action method="insert">
+                <block>oyst.oneclick.cart.checkout</block>
+            </action>
+        </reference>
+    </oneclick_cart_top>
+
+    <oneclick_cart_bottom>
+        <reference name="checkout.cart.methods">
+            <action method="insert">
+                <block>oyst.oneclick.cart.checkout</block>
+            </action>
+        </reference>
+    </oneclick_cart_bottom>
+
 </layout>

@@ -111,4 +111,21 @@ class Oyst_OneClick_Model_Observer
                 ->sendHeadersAndExit();
         }
     }
+
+    public function appendOneClickButton(Varien_Event_Observer $observer)
+    {
+        if ('checkout_cart_index' === $observer->getAction()->getFullActionName()) {
+            $layout = $observer->getLayout();
+            $position = Mage::getStoreConfig('oyst/oneclick/checkout_cart_button_position');
+
+            switch ($position) {
+                case 'top':
+                    $layout->getUpdate()->addHandle('oneclick_cart_top');
+                    break;
+                case 'bottom':
+                    $layout->getUpdate()->addHandle('oneclick_cart_bottom');
+                    break;
+            }
+        }
+    }
 }

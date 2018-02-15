@@ -100,6 +100,16 @@
                 </oyst_oneclick>
             </updates>
         </layout>
+        <events>
+            <controller_action_layout_load_before>
+                <observers>
+                    <oyst_payment>
+                        <class>Oyst_OneClick_Model_Observer</class>
+                        <method>appendOneClickButton</method>
+                    </oyst_payment>
+                </observers>
+            </controller_action_layout_load_before>
+        </events>
     </frontend>
     <adminhtml>
         <layout>
@@ -200,6 +210,7 @@
                 <button_rounded>1</button_rounded>
                 <button_smart>1</button_smart>
                 <new_customer_account>1</new_customer_account>
+                <checkout_cart_button_position>disabled</checkout_cart_button_position>
             </oneclick>
             <order_settings>
                 <enable>0</enable>
