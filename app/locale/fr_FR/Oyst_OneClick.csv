@@ -151,3 +151,5 @@
 
 "Unable to refund Oyst order %s (%s - %s).","Impossible de rembourser de la commande %s (%s - %s)."
 "There is already one credit memo in the queue.","Il y a déjà un remboursement en cours."
+
+"Reinitialize delay buffer","Réinitialiser le tampon de délai"
